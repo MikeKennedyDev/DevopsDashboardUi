@@ -1,32 +1,27 @@
-name: DevopsDashboardUi CI
+trigger:
+- main
 
-on:
-  push:
-    branches: [main]
+pool:
+  vmImage: ubuntu-latest
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: 'Install Node.js'
 
-    steps:
-      - uses: actions/checkout@v2
+- task: Cache@2
+  inputs:
+    key: 'npm | package-lock.json'
+    path: 'node_modules'
+    cacheHitVar: CACHE_RESTORED
+  displayName: 'Cache node_modules'
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 18
+- script: |
+    npm install
+  displayName: 'npm install'
+  condition: ne(variables.CACHE_RESTORED, 'true')
 
-      - run: npm install -g typescript
-      - run: npm run build
-
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 18
-
-      - run: npm install -g typescript
-      - run: npm run deploy
+- script: |
+    npm run build
+  displayName: 'npm build'
