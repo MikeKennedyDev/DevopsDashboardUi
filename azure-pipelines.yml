@@ -28,8 +28,7 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'webapp'
+    PathtoPublish: '$(System.DefaultWorkingDirectory)/build'
+    ArtifactName: 'reactapp'
     publishLocation: 'Container'
-  displayName: 'Publish Build Artifacts'
 
