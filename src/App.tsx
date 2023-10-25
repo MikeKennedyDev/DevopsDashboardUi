@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { CssBaseline } from '@mui/material';
+import Header from './components/Header';
+import MainContent from './components/MainContent';
 
-function App() {
+const App: React.FC = () => {
+  const sampleProjects = [
+    { id: 1, name: 'Project A' },
+    { id: 2, name: 'Project B' }
+  ];
+
+  const sampleUser = {
+    id: 1,
+    name: 'Mike Kennedy'
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <CssBaseline />
+      <Header
+      projects={sampleProjects}
+      user={sampleUser}
+      notificationsCount={5}
+      />
+      <MainContent/>
     </div>
   );
-}
+};
 
 export default App;
