@@ -12,6 +12,9 @@ import PerformanceMetricsPanel from './MetricsAndMonitoringOverview/PerformanceM
 import ErrorMetricsPanel from './MetricsAndMonitoringOverview/ErrorMetricsPanel';
 import ResourceUtilizationPanel from './MetricsAndMonitoringOverview/ResourceUtilizationPanel';
 
+// Feedback & Quality control imports
+import TestResultsPanel, { TestResult } from './FeedbackAndQualityControl/TestResultsPanel';
+
 const MainContent: React.FC = () => {
     const sampleContent = [{
         author: 'Mike Kennedy',
@@ -44,6 +47,12 @@ const MainContent: React.FC = () => {
         setIsProductionDeployed(false);
     }
 
+    const passedStatus = 'passed';
+    const sampleTestResults: TestResult[] = [
+        { name: 'Unit Test 1', status: 'passed', logLink: 'https://loglink1.com'},
+        { name: 'Integration Test 2', status: 'failed', logLink: 'https://loglink2.com' }
+    ]
+
     return (
         <Container>
 
@@ -63,6 +72,11 @@ const MainContent: React.FC = () => {
                     <PerformanceMetricsPanel />
                     <ErrorMetricsPanel />
                     <ResourceUtilizationPanel />
+                </Grid>
+
+                <Grid item xs={12} md={4}>
+                    <Typography variant='h6'>Feedback & Quality Control</Typography>
+                    <TestResultsPanel testResults={sampleTestResults} />
                 </Grid>
             </Grid>
         </Container>
