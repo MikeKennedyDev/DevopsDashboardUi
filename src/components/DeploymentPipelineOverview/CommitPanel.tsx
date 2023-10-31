@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Chip, Typography } from '@mui/material';
+import { Card, CardContent, Chip, Typography, Stack, Box, CardHeader } from '@mui/material';
 
 interface CommitProps {
     author: string;
@@ -11,29 +11,34 @@ interface CommitProps {
     productionStatus?: string;
 }
 
-const CommitPannel: React.FC<{ commits: CommitProps[] }> = ({ commits }) => {
+const CommitPanel: React.FC<{ commits: CommitProps[] }> = ({ commits }) => {
     return (
-        <div className='commit-panel'>
+        <Box className='commit-panel' sx={{ overflow: 'auto', maxHeight: 'calc(100vh - 100px)', px: 2 }}>
             {commits.map((commit, index) => (
-                <Card key = {index} sx={{ mb: 2, bg: commit.triggeredDeployment ? 'triggered' : ''}}>
+                <Card key={index} sx={{ mb: 2, bgcolor: commit.triggeredDeployment ? 'action.selected' : 'background.paper' }}>
+                    <CardHeader
+                        title={commit.message}
+                        subheader={`${commit.author}, ${commit.timestamp.toLocaleString()}`}
+                        titleTypographyProps={{ variant: 'subtitle1' }}
+                        subheaderTypographyProps={{ variant: 'body2' }}
+                    />
                     <CardContent>
-                        <Typography>Author: {commit.author}</Typography>
-                        <Typography>Timestamp: {commit.timestamp.toString()}</Typography>
-                        <Typography>Message: {commit.message}</Typography>
-                        {commit.buildStatus && (
-                            <Chip label={`Build: ${commit.buildStatus}`} color={commit.buildStatus === 'Success' ? 'success' : 'error'} />
-                        )}
-                        {commit.stagingStatus && (
-                            <Chip label={`Staging: ${commit.stagingStatus}`} color={commit.stagingStatus === 'Success' ? 'success' : 'error'} />
-                        )}
-                        {commit.productionStatus && (
-                            <Chip label={`Production Status: ${commit.productionStatus}`} color={commit.productionStatus === 'Success' ? 'success' : 'error'} />
-                        )}
+                        <Stack direction="column" spacing={1}>
+                            {commit.buildStatus && (
+                                <Chip label={`Build: ${commit.buildStatus}`} color={commit.buildStatus === 'Success' ? 'success' : 'error'} />
+                            )}
+                            {commit.stagingStatus && (
+                                <Chip label={`Staging: ${commit.stagingStatus}`} color={commit.stagingStatus === 'Success' ? 'success' : 'error'} />
+                            )}
+                            {commit.productionStatus && (
+                                <Chip label={`Production: ${commit.productionStatus}`} color={commit.productionStatus === 'Success' ? 'success' : 'error'} />
+                            )}
+                        </Stack>
                     </CardContent>
                 </Card>
             ))}
-        </div>
+        </Box>
     );
 };
 
-export default CommitPannel;
+export default CommitPanel;

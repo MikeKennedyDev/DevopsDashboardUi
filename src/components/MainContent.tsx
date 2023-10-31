@@ -14,6 +14,7 @@ import ResourceUtilizationPanel from './MetricsAndMonitoringOverview/ResourceUti
 
 // Feedback & Quality control imports
 import TestResultsPanel, { TestResult } from './FeedbackAndQualityControl/TestResultsPanel';
+import RollbackPanel, { RollbackVersion } from './FeedbackAndQualityControl/RollbackPanel';
 
 const MainContent: React.FC = () => {
     const sampleContent = [{
@@ -47,11 +48,20 @@ const MainContent: React.FC = () => {
         setIsProductionDeployed(false);
     }
 
-    const passedStatus = 'passed';
     const sampleTestResults: TestResult[] = [
         { name: 'Unit Test 1', status: 'passed', logLink: 'https://loglink1.com'},
         { name: 'Integration Test 2', status: 'failed', logLink: 'https://loglink2.com' }
     ]
+
+    const handleRollbackVersion = (version: string) => {
+        alert(`Rolling back to ${version}`);
+    }
+
+    const [rollbackVersions, setRollbackVersions] = useState<RollbackVersion[]>([
+        { version: '1.0.0', deployedDate: '2023-10-20' },
+        { version: '1.1.0', deployedDate: '2023-10-28' },
+        { version: '1.1.2', deployedDate: '2023-10-29' },
+    ]);
 
     return (
         <Container>
@@ -77,6 +87,7 @@ const MainContent: React.FC = () => {
                 <Grid item xs={12} md={4}>
                     <Typography variant='h6'>Feedback & Quality Control</Typography>
                     <TestResultsPanel testResults={sampleTestResults} />
+                    <RollbackPanel versions={rollbackVersions} onRollback={handleRollbackVersion} />
                 </Grid>
             </Grid>
         </Container>
