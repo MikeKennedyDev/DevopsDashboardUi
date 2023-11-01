@@ -1,4 +1,6 @@
 import React from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+import darkTheme from './utils/theme';
 import './App.css';
 import { CssBaseline } from '@mui/material';
 import Header from './components/Header';
@@ -16,15 +18,17 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
-      <CssBaseline />
-      <Header
-      projects={sampleProjects}
-      user={sampleUser}
-      notificationsCount={5}
-      />
-      <MainContent/>
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <div>
+        <CssBaseline />
+        <Header
+        projects={sampleProjects}
+        user={sampleUser}
+        notificationsCount={5}
+        />
+        <MainContent/>
+      </div>
+    </ThemeProvider>
   );
 };
 
