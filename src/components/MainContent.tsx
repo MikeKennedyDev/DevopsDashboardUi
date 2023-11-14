@@ -88,7 +88,7 @@ const MainContent: React.FC = () => {
                     <Typography variant='h6'>Feedback & Quality Control</Typography>
                     <TestResultsPanel testResults={sampleTestResults} />
                     <RollbackPanel versions={rollbackVersions} onRollback={handleRollbackVersion} />
-                </Grid>
+                </Grid> 
             </Grid>
         </Container>
     );
