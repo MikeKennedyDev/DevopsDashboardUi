@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-prod
+  labels:
+    app: frontend
+    environment: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: devopsdashboard.azurecr.io/DevopsDashboardUi:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "250m" # Adjust based on your app's needs
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+        livenessProbe:
+          httpGet:
+            path: / # Adjust if your app has a different health check path
+            port: 80
+          initialDelaySeconds: 15
+          timeoutSeconds: 2
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: / # Adjust if your app has a different readiness check path
+            port: 80
+          initialDelaySeconds: 5
+          timeoutSeconds: 2
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  labels:
+    app: frontend
+spec:
+  type: LoadBalancer # Exposes your service externally
+  ports:
+  - port: 80 # The port your service is available on externally
+    targetPort: 80 # The port your container is listening on
+  selector:
+    app: frontend

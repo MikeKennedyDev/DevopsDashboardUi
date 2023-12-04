@@ -1,0 +1,6 @@
+FROM node:14 as build
+WORKDIR /app
+COPY packag.json package-lock.json ./
+RUN npm install 
+COPY . ./
+RUN npm run build 
