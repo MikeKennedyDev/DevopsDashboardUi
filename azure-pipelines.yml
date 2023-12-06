@@ -34,7 +34,7 @@ steps:
 
 - task: Docker@2
   inputs:
-    containerRegistry: 'ACR Service Connection'
+    containerRegistry: 'DevopsDashboardServiceConnection'
     repository: 'DevopsDashboard'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
