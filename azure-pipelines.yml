@@ -32,3 +32,11 @@ steps:
     ArtifactName: 'reactapp'
     publishLocation: 'Container'
 
+- task: Docker@2
+  inputs:
+    containerRegistry: 'devopsdashboard.azurecr.io'
+    repository: 'DevopsDashboard'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: 
+      $(Build.BuildId)
